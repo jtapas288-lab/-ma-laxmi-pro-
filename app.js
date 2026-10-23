@@ -1,0 +1,18 @@
+const $=s=>document.querySelector(s); const $$=s=>document.querySelectorAll(s);
+const videos=[]; let profile=null;
+$("#year").textContent=new Date().getFullYear();
+function go(page){$$(".page").forEach(x=>x.classList.toggle("hidden",x.id!==page));$$(".nav").forEach(x=>x.classList.toggle("active",x.dataset.page===page));window.scrollTo({top:0,behavior:"smooth"});}
+$$(".nav").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+$$("[data-goto]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.goto)));
+function showAuth(){ $("#authDialog").showModal(); }
+$("#loginTop").onclick=showAuth; $("#authButton").onclick=showAuth;
+$("#authForm").addEventListener("submit",e=>{e.preventDefault();profile={name:$("#displayName").value.trim(),email:$("#email").value.trim()};renderProfile();$("#authDialog").close();});
+function renderProfile(){if(!profile)return;$("#profileState").innerHTML=`<p>Signed in as <strong>${escapeHTML(profile.name)}</strong><br><span class="muted">${escapeHTML(profile.email)}</span></p>`;$("#authButton").classList.add("hidden");$("#logoutButton").classList.remove("hidden");$("#loginTop").textContent=profile.name.split(" ")[0];}
+$("#logoutButton").onclick=()=>{profile=null;$("#profileState").innerHTML="<p>Sign in or create a local demo profile.</p>";$("#authButton").classList.remove("hidden");$("#logoutButton").classList.add("hidden");$("#loginTop").textContent="Login";};
+function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+$("#uploadForm").addEventListener("submit",e=>{e.preventDefault();const f=$("#videoFile").files[0];if(!f)return;if(!f.type.startsWith("video/")){alert("Please choose a video file.");return;}const item={title:$("#videoTitle").value.trim(),url:URL.createObjectURL(f),name:f.name};videos.unshift(item);renderVideos();$("#uploadMsg").textContent="Video added to this session.";$("#uploadForm").reset();go("home");});
+function renderVideos(){const list=$("#videoList");$("#videoCount").textContent=`${videos.length} video${videos.length===1?"":"s"}`;if(!videos.length){list.innerHTML='<p class="muted">No videos yet. Upload your first video!</p>';return;}list.innerHTML="";videos.forEach(v=>{const card=document.createElement("article");card.className="video-card";const video=document.createElement("video");video.src=v.url;video.controls=true;video.playsInline=true;const h=document.createElement("h3");h.textContent=v.title;const p=document.createElement("p");p.className="muted";p.textContent=v.name;card.append(video,h,p);list.append(card);});}
+$("#audioFile").addEventListener("change",()=>{const f=$("#audioFile").files[0];if(f){$("#audioPlayer").src=URL.createObjectURL(f);$("#audioPlayer").volume=Number($("#volume").value)/100;}});
+$("#volume").addEventListener("input",()=>{$("#volumeLabel").textContent=$("#volume").value+"%";$("#audioPlayer").volume=Number($("#volume").value)/100;});
+$("#adminButton").onclick=()=>{$("#adminResult").innerHTML="";const p=$("#adminPass").value;if(p!=="LAXMI-DEMO"){const el=document.createElement("p");el.className="muted";el.textContent="Incorrect demo passcode. (For this prototype, use LAXMI-DEMO.)";$("#adminResult").append(el);return;}const el=document.createElement("div");el.className="earnstat";el.innerHTML=`<span>Demo admin overview</span><strong>${videos.length} videos</strong>`;$("#adminResult").append(el);const note=document.createElement("p");note.className="muted";note.textContent="Production admin features require server-side authentication and a database.";$("#adminResult").append(note);};
+if("serviceWorker" in navigator && location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});

@@ -1,0 +1,10 @@
+{
+  "name": "MA LAXMI PRO",
+  "short_name": "MA LAXMI PRO",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#101827",
+  "description": "DJ sound, video and creator app",
+  "icons": []
+}

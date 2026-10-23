@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827"><meta name="description" content="MA LAXMI PRO DJ sound, video and creator app">
+<link rel="manifest" href="manifest.json"><link rel="stylesheet" href="style.css">
+<title>MA LAXMI PRO</title>
+</head>
+<body>
+<header class="top"><div class="brandmark">♫</div><div><h1>MA LAXMI PRO</h1><small>DJ SOUND • VIDEO • CREATOR</small></div><button id="loginTop" class="outline">Login</button></header>
+<nav><button class="nav active" data-page="home">Home</button><button class="nav" data-page="upload">Upload</button><button class="nav" data-page="sound">Sound Test</button><button class="nav" data-page="earn">Earn</button><button class="nav" data-page="profile">Profile</button></nav>
+<main>
+<section id="home" class="page">
+<div class="hero"><p class="eyebrow">YOUR SOUND. YOUR STAGE.</p><h2>Welcome to <span>MA LAXMI PRO</span></h2><p>DJ setup videos, bass checks and sound testing — all in one place.</p><div class="actions"><button data-goto="upload">Upload video</button><button class="secondary" data-goto="sound">Test sound</button></div></div>
+<div class="sectionhead"><h2>Latest videos</h2><span id="videoCount">0 videos</span></div><div id="videoList" class="videos"><p class="muted">No videos yet. Upload your first video!</p></div>
+</section>
+<section id="upload" class="page hidden"><div class="panel"><h2>Upload a video</h2><p class="muted">Prototype: videos are stored only in this browser session/device. Don't upload private or copyrighted material.</p><form id="uploadForm"><label>Video title<input id="videoTitle" required maxlength="100" placeholder="e.g. 8 Inch Bass Testing 🔊"></label><label>Choose video file<input id="videoFile" type="file" accept="video/*" required></label><button type="submit">Add video</button></form><p id="uploadMsg" class="muted"></p></div></section>
+<section id="sound" class="page hidden"><div class="panel"><h2>Audio / Sound test</h2><p class="muted">Select an audio file to play it. Start at low volume to protect your hearing and speakers.</p><label>Choose audio file<input id="audioFile" type="file" accept="audio/*"></label><audio id="audioPlayer" controls class="full"></audio><div class="meter"><label for="volume">Playback volume <strong id="volumeLabel">60%</strong></label><input id="volume" type="range" min="0" max="100" value="60"></div><p class="muted">This tests playback only; it does not measure true speaker wattage, bass response or sound pressure level.</p></div></section>
+<section id="earn" class="page hidden"><div class="panel"><h2>Creator earnings</h2><div class="earnstat"><span>Estimated balance</span><strong>₹0.00</strong></div><p>Monetization is not active in this prototype. To earn real money, the owner must set up an approved ad network, comply with its policies, publish a privacy policy, and configure payment and tax details.</p><ul><li>Never pay a fee to unlock fake earnings.</li><li>Only use music and videos you own or have permission to share.</li><li>Ad revenue is not guaranteed and depends on approval and eligible views.</li></ul></div></section>
+<section id="profile" class="page hidden"><div class="panel"><h2>Your account</h2><div id="profileState"><p>Sign in or create a local demo profile.</p></div><div class="actions"><button id="authButton">Login / Register</button><button id="logoutButton" class="secondary hidden">Logout</button></div><p class="muted">Demo accounts are stored on this device only. This is not secure production authentication.</p><details><summary>Admin demo panel</summary><p>Admin view is only a local mockup. Real admin access must be protected on a server.</p><label>Admin passcode<input id="adminPass" type="password" placeholder="Demo passcode"></label><button id="adminButton">Open admin panel</button><div id="adminResult"></div></details></div></section>
+</main>
+<footer>© <span id="year"></span> MA LAXMI PRO <span>• Prototype v1.0</span></footer>
+<dialog id="authDialog"><form method="dialog" id="authForm"><h2>Welcome, creator</h2><label>Your display name<input id="displayName" required maxlength="40" placeholder="Your name"></label><label>Email (demo only)<input id="email" type="email" required placeholder="you@example.com"></label><p class="muted">No password or real account is created in this demo.</p><div class="actions"><button value="cancel" class="secondary">Cancel</button><button id="saveProfile" value="default">Continue</button></div></form></dialog>
+<script src="app.js"></script>
+</body></html>
